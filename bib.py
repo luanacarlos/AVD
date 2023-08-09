@@ -1,4 +1,8 @@
-from numpy import sort
+import numpy as np
+from numpy import *
+import matplotlib.pyplot as plt
+
+
 def media_aritmetica(dados):
     soma = 0
     for i in dados:
@@ -13,6 +17,10 @@ def mediana(dados):
     else:
         return dados(len)
 
+#implementar de modo que ja receba um array def plotar_histograma(array):
+def plotar_histograma():
+    frequencias = [int(item) for item in input("Digite as frequencias : ").split()]
+    plt.hist(frequencias, rwidth=0.5)
+    plt.show()
 
-
-mediana([1,2,3,4,5,5,54,4,2,1,])
+plotar_histograma()
