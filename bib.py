@@ -36,7 +36,17 @@ def media_harmonica(dados):
     print(round(numerador/denominador))
     
 
-def media_das_taxas(dados_1, dados_2)
+def media_das_taxas(dados_1, dados_2):
+    taxa_1 = sum(list(dados_1))/len(dados_1)
+    taxa_2 = sum(list(dados_2))/len(dados_2)
+    print (round(((taxa_1/taxa_2)*100), 1))
+
+
+def media_das_taxas_constante(dados_1, constante):
+    soma = sum(list(dados_1))
+    denominador = constante*len(dados_1)
+    print(((1/denominador)*soma)*100)
+
 
 #implementar de modo que ja receba um array def plotar_histograma(array):
 def plotar_histograma():
@@ -45,4 +55,4 @@ def plotar_histograma():
     plt.show()
 
 
-media_harmonica([405, 367, 405, 419, 388])
+media_das_taxas_constante([3.0, 5.0, 4.2, 5.2, 8.6], 100)
