@@ -30,8 +30,13 @@ def media_geometrica(dados):
     print(round(media, 1))
 
 
-def media_harmonica():
+def media_harmonica(dados):
+    numerador = len(dados)
+    denominador = sum(list(map(lambda x : 1/x, dados)))
+    print(round(numerador/denominador))
     
+
+def media_das_taxas(dados_1, dados_2)
 
 #implementar de modo que ja receba um array def plotar_histograma(array):
 def plotar_histograma():
@@ -40,3 +45,4 @@ def plotar_histograma():
     plt.show()
 
 
+media_harmonica([405, 367, 405, 419, 388])
