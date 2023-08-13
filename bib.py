@@ -10,6 +10,7 @@ def media_aritmetica(dados):
 
     return soma/len(dados) if len(dados) > 0 else 0
 
+
 def mediana(dados):
     dados.sort()
     if len(dados)%2 == 0:
@@ -17,10 +18,25 @@ def mediana(dados):
     else:
         return dados(len)
 
+
+def media_ponderada(pesos, dados):
+    numerador = sum(list(map(lambda x, y: x*y, pesos, dados)))
+    media = numerador/sum(pesos)
+    print(round(media, 1))
+
+
+def media_geometrica(dados):
+    media = np.prod(dados)**(1/len(dados))
+    print(round(media, 1))
+
+
+def media_harmonica():
+    
+
 #implementar de modo que ja receba um array def plotar_histograma(array):
 def plotar_histograma():
     frequencias = [int(item) for item in input("Digite as frequencias : ").split()]
     plt.hist(frequencias, rwidth=0.5)
     plt.show()
 
-plotar_histograma()
+
