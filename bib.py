@@ -7,11 +7,7 @@ import math
 constantes_de_confianca = {80: 1.28, 85: 1.44, 90: 1.64, 95: 1.96, 99: 2.57, 99.5: 2.8, 99.9: 3.29}
 
 def media_aritmetica(dados):
-    soma = 0
-    for i in dados:
-        soma += i
-
-    return soma/len(dados) if len(dados) > 0 else 0
+    return sum(dados)/len(dados) if len(dados) > 0 else 0
 
 
 def mediana(dados):
@@ -40,10 +36,10 @@ def media_harmonica(dados):
     return(round(numerador/denominador))
     
 
-def media_das_taxas(dados_1, dados_2):
-    taxa_1 = sum(list(dados_1))/len(dados_1)
-    taxa_2 = sum(list(dados_2))/len(dados_2)
-    return (round(((taxa_1/taxa_2)*100), 1))
+def media_das_taxas(media, taxa):
+    media_1 = sum(list(media))/len(media)
+    media_2 = sum(list(taxa))/len(taxa)
+    return (round(((media_2/media_1)*100), 1))
 
 
 def media_das_taxas_constante(dados_1, constante):
@@ -64,13 +60,11 @@ def plotar_histograma():
 
 
 def amplitude (dados):
-    return max(dados) - min(dados)
+    return (max(dados) - min(dados))
 
 
 def media_amostral(dados):
-    soma = sum(dados)
-    tamanho = len(dados)
-    return soma/tamanho
+    return media_aritmetica(dados)
 
 
 def variancia_amostral(dados):
