@@ -1,0 +1,4 @@
+site para testar dados do programa 
+
+-> caculo do desvio padrao e outras coisas
+https://miniwebtool.com/br/standard-deviation-calculator/ 
