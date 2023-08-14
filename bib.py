@@ -1,8 +1,10 @@
 import numpy as np
 from numpy import *
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from collections import Counter
 import math
+
+constantes_de_confianca = {80: 1.28, 85: 1.44, 90: 1.64, 95: 1.96, 99: 2.57, 99.5: 2.8, 99.9: 3.29}
 
 def media_aritmetica(dados):
     soma = 0
@@ -15,15 +17,16 @@ def media_aritmetica(dados):
 def mediana(dados):
     dados.sort()
     if len(dados)%2 == 0:
-        return media([dados[len(dados)/2],dados[(len(dados)/2)+1]])  
+        return media_aritmetica([dados[len(dados)/2],dados[(len(dados)/2)+1]])  
     else:
-        return dados(len)
+        index = round(len(dados)/2) 
+        return (dados[index-1])
 
 
-def media_ponderada(pesos, dados):
+def media_ponderada(dados, pesos):
     numerador = sum(list(map(lambda x, y: x*y, pesos, dados)))
     media = numerador/sum(pesos)
-    return(round(media, 1))
+    return(round(media,1))
 
 
 def media_geometrica(dados):
@@ -59,25 +62,29 @@ def plotar_histograma():
     plt.hist(frequencias, rwidth=0.5)
     plt.show()
 
+
 def amplitude (dados):
     return max(dados) - min(dados)
-        
+
+
 def media_amostral(dados):
     soma = sum(dados)
     tamanho = len(dados)
     return soma/tamanho
 
+
 def variancia_amostral(dados):
     n = len(dados)
     media = media_aritmetica(dados)
     soma_diferencas_quad = np.sum(np.fromiter(((x - media) * (x - media) for x in dados), dtype=float))
-    variancia = soma_diferencas_quad / (n - 1)
-    return variancia
+    variancia = soma_diferencas_quad / n
+    return round(variancia)
+
 
 def desvio_padrao (dados):
     variancia = variancia_amostral(dados)
     desvioPadrao = math.sqrt(variancia)
-    return desvioPadrao
+    return round(desvioPadrao)
 
 
 #Essa função ainda n funciona como deveria!! -> ta sim!!
@@ -87,15 +94,15 @@ def coeficiente_de_variacao(dados):
     coefieciente = (desvio/media) *100
     return coefieciente
 
+
 def calcular_quartis(dados):
     dados_ordenados = sorted(dados)
     n = len(dados_ordenados)
-    
     quartil_1 = dados_ordenados[int(n * 0.25)]
     quartil_2 = dados_ordenados[int(n * 0.5)]
     quartil_3 = dados_ordenados[int(n * 0.75)]
-    
     return quartil_1, quartil_2, quartil_3
+
 
 def amplitude_interquartil(dados):
     q1,q2,q3 = calcular_quartis(dados)
@@ -103,15 +110,25 @@ def amplitude_interquartil(dados):
     b= q3
     return b-a
 
-idadePessoas = [3,5,8,11,12]
+
+def intervalo_de_confianca_maior_30(dados, nivel_de_confianca):
+    confianca = (nivel_de_confianca/100)
+    alpha = 1 - confianca
+    constante = constantes_de_confianca[nivel_de_confianca]*desvio_padrao(dados)
+    return[media_aritmetica(dados)-constante, media_aritmetica(dados)+constante]
 
 
-#print(variancia_amostral(idadePessoas))
+
+
+
+idadePessoas = [460, 800, 300, 400]
+
+print(variancia_amostral(idadePessoas))
 print(desvio_padrao(idadePessoas))
 print(media_aritmetica(idadePessoas))
+print(intervalo_de_confianca_maior_30)
 
 print(coeficiente_de_variacao(idadePessoas))
-
 
 amostra = [10, 15, 20, 25, 30, 35, 40, 45, 50]
 q1, q2, q3 = calcular_quartis(amostra)
