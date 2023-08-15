@@ -131,3 +131,5 @@ print("Segundo Quartil (Q2, Mediana):", q2)
 print("Terceiro Quartil (Q3):", q3)
 
 print(amplitude_interquartil(amostra))
+
+teste
