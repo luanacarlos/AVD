@@ -1,10 +1,9 @@
 import numpy as np
-from numpy import *
 import matplotlib.pyplot as plt
 from collections import Counter
+import scipy.stats
 import math
 
-constantes_de_confianca = {80: 1.28, 85: 1.44, 90: 1.64, 95: 1.96, 99: 2.57, 99.5: 2.8, 99.9: 3.29}
 
 def media_aritmetica(dados):
     return sum(dados)/len(dados) if len(dados) > 0 else 0
@@ -72,13 +71,13 @@ def variancia_amostral(dados):
     media = media_aritmetica(dados)
     soma_diferencas_quad = np.sum(np.fromiter(((x - media) * (x - media) for x in dados), dtype=float))
     variancia = soma_diferencas_quad / n
-    return round(variancia)
+    return variancia
 
 
-def desvio_padrao (dados):
+def desvio_padrao(dados):
     variancia = variancia_amostral(dados)
     desvioPadrao = math.sqrt(variancia)
-    return round(desvioPadrao)
+    return desvioPadrao
 
 
 #Essa função ainda n funciona como deveria!! -> ta sim!!
@@ -108,28 +107,21 @@ def amplitude_interquartil(dados):
 def intervalo_de_confianca_maior_30(dados, nivel_de_confianca):
     confianca = (nivel_de_confianca/100)
     alpha = 1 - confianca
-    constante = constantes_de_confianca[nivel_de_confianca]*desvio_padrao(dados)
+    alpha_barra = 1 - (alpha/2)
+    distribuicao_normal = scipy.stats.norm.ppf(alpha_barra)
+    constante = distribuicao_normal*desvio_padrao(dados)/(math.sqrt(len(dados)))
+    return[round((media_aritmetica(dados)-constante),3), round((media_aritmetica(dados)+constante), 3)]
+
+
+
+def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
+    confianca = (nivel_de_confianca/100)
+    alpha = 1 - confianca
+    alpha_barra = 1 - (alpha/2)
+    print(f'alpha barra = {alpha_barra}')
+    t_student = scipy.stats.t.ppf(alpha_barra, (len(dados)-1))
+    constante = t_student*(desvio_padrao(dados)/(math.sqrt(len(dados))))
     return[media_aritmetica(dados)-constante, media_aritmetica(dados)+constante]
 
 
-
-
-
-idadePessoas = [460, 800, 300, 400]
-
-print(variancia_amostral(idadePessoas))
-print(desvio_padrao(idadePessoas))
-print(media_aritmetica(idadePessoas))
-print(intervalo_de_confianca_maior_30)
-
-print(coeficiente_de_variacao(idadePessoas))
-
-amostra = [10, 15, 20, 25, 30, 35, 40, 45, 50]
-q1, q2, q3 = calcular_quartis(amostra)
-print("Primeiro Quartil (Q1):", q1)
-print("Segundo Quartil (Q2, Mediana):", q2)
-print("Terceiro Quartil (Q3):", q3)
-
-print(amplitude_interquartil(amostra))
-
-mudei
+print(intervalo_de_confianca_menor_30([-.04, -.19, -.14, -.09, -.14, .19, .04, .09 ], 95))                                                          
