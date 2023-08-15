@@ -132,4 +132,4 @@ print("Terceiro Quartil (Q3):", q3)
 
 print(amplitude_interquartil(amostra))
 
-teste
+mudei
