@@ -118,10 +118,61 @@ def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
     confianca = (nivel_de_confianca/100)
     alpha = 1 - confianca
     alpha_barra = 1 - (alpha/2)
-    print(f'alpha barra = {alpha_barra}')
     t_student = scipy.stats.t.ppf(alpha_barra, (len(dados)-1))
     constante = t_student*(desvio_padrao(dados)/(math.sqrt(len(dados))))
     return[media_aritmetica(dados)-constante, media_aritmetica(dados)+constante]
+
+
+def intervalo_de_confianca(dados, nivel_de_confianca):
+    if len(dados) >= 30:
+        return intervalo_de_confianca_maior_30(dados, nivel_de_confianca)
+    
+    else:
+        return intervalo_de_confianca_menor_30(dados, nivel_de_confianca)
+    
+
+
+def subtrai_sistemas(sistema_A, sistema_B):
+    return list(map(lambda x, y: x - y, sistema_A, sistema_B))
+    
+
+def teste_media_zero(intervalo):
+    limite_inferior = intervalo[0]
+    limite_superior = intervalo[1]
+    if limite_inferior <= 0 <= limite_superior:
+        print(f'Não há diferença significativa entre os sistemas pois como vemos no intervalo {intervalo}, o 0 está incluso')
+        
+    else:
+        print(f'Há diferença entre os dois sistemas pois como vemos {intervalo}, o 0 não está incluso')
+
+    
+def amostras_nao_pareadas(amostra_A, amostra_B, nivel_de_confianca):
+    media_A =  media_amostral(amostra_A)
+    media_B = media_amostral(amostra_B)
+    diferenca_medias = media_A - media_B
+    desvio_A = desvio_padrao(amostra_A)
+    desvio_B = desvio_padrao(amostra_B)
+    constante = ((desvio_A**2)/len(amostra_A)) + ((desvio_B**2)/len(amostra_B))
+    desvio_das_diferencas = math.sqrt(constante)
+    variavel_a = (1/(len(amostra_A)-1))*(((desvio_A**2)/len(amostra_A)))
+    variavel_b = (1/(len(amostra_B)-1))*(((desvio_B**2)/len(amostra_B)))
+    graus_de_liberdade = (int)(((constante**2)/(variavel_a+variavel_b))-2)
+    confianca = (nivel_de_confianca/100)
+    alpha = 1 - confianca
+    alpha_barra = 1 - (alpha/2)
+    return [diferenca_medias - (desvio_das_diferencas*scipy.stats.t.ppf(graus_de_liberdade, alpha_barra)),
+            diferenca_medias + (desvio_das_diferencas*scipy.stats.t.ppf(graus_de_liberdade, alpha_barra))]
+
+
+
+sistema_A = [5.4, 16.6, 0.6, 1.4, 0.6, 7.3]
+sistema_B = [19.1, 3.5, 3.4, 2.5, 3.6, 1.7]
+teste_media_zero(intervalo_de_confianca(subtrai_sistemas(sistema_A, sistema_B), 90)) 
+teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 95) 
+teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 99)
+
+exercicio_dois = [1.5, 2.6, -1.8, 1.3, -0.5, 1.7, 2.4] 
+teste_media_zero(exercicio_dois, 99)
 
 
 def calcula_distribuicao_normal_cdf(z):
