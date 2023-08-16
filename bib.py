@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
-import scipy.stats
+import scipy.stats 
 import math
 
 
@@ -52,10 +52,10 @@ def moda(dados):
 
 
 #implementar de modo que ja receba um array def plotar_histograma(array):
-def plotar_histograma():
-    frequencias = [int(item) for item in input("Digite as frequencias : ").split()]
-    plt.hist(frequencias, rwidth=0.5)
-    plt.show()
+#def plotar_histograma():
+ #   frequencias = [int(item) for item in input("Digite as frequencias : ").split()]
+  #  plt.hist(frequencias, rwidth=0.5)
+   # plt.show()
 
 
 def amplitude (dados):
@@ -124,4 +124,42 @@ def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
     return[media_aritmetica(dados)-constante, media_aritmetica(dados)+constante]
 
 
-print(intervalo_de_confianca_menor_30([-.04, -.19, -.14, -.09, -.14, .19, .04, .09 ], 95))                                                          
+def calcula_distribuicao_normal_cdf(z):
+    t = 1.0 / (1.0 + 0.2316419 * abs(z))
+    coeficientes = [0.31938153, -0.356563782, 1.781477937, -1.821255978, 1.330274429]
+    cdf = 1.0 - 1.0 / math.sqrt(2*math.pi) * math.exp(-z**2 / 2.0) * (coeficientes[0]*t + coeficientes[1]*t**2 + coeficientes[2]*t**3 + coeficientes[3]*t**4 + coeficientes[4]*t**5)
+    return cdf
+
+def teste_hipotese_z(media_amostral, media_nula, desvio_padrao_populacional, tamanho_amostra, nivel_significancia, alternativa='dois-lados'):
+
+    escore_z = (media_amostral - media_nula) / (desvio_padrao_populacional / math.sqrt(tamanho_amostra))
+    
+    if alternativa == 'dois-lados':
+        valor_p = 2 * (1 - calcula_distribuicao_normal_cdf(abs(escore_z)))
+    elif alternativa == 'menor':
+        valor_p = calcula_distribuicao_normal_cdf(escore_z)
+    elif alternativa == 'maior':
+        valor_p = 1 - calcula_distribuicao_normal_cdf(escore_z)
+    else:
+        raise ValueError("Hipótese alternativa inválida")
+    
+    if valor_p < nivel_significancia:
+        return "Rejeitar a hipótese nula"
+    else:
+        return "Não rejeitar a hipótese nula"
+
+
+# Parâmetros
+media_amostral = 43
+media_nula = 45
+desvio_padrao_populacional = 6
+tamanho_amostra = 64
+nivel_significancia = 0.10
+alternativa = 'dois-lados'
+
+# Chamada da função
+resultado = teste_hipotese_z(media_amostral, media_nula, desvio_padrao_populacional, tamanho_amostra, nivel_significancia, alternativa)
+print(resultado)
+
+
+
