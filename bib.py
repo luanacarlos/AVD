@@ -113,7 +113,6 @@ def intervalo_de_confianca_maior_30(dados, nivel_de_confianca):
     return[round((media_aritmetica(dados)-constante),3), round((media_aritmetica(dados)+constante), 3)]
 
 
-
 def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
     confianca = (nivel_de_confianca/100)
     alpha = 1 - confianca
@@ -160,47 +159,43 @@ def amostras_nao_pareadas(amostra_A, amostra_B, nivel_de_confianca):
     media_amostral_A = media_amostral(amostra_A)
     media_amostral_B = media_amostral(amostra_B)
     diferenca_media_amostral = (media_amostral_A - media_amostral_B)
-    print(diferenca_media_amostral)
     desvio_padrao_A = desvio_padrao(amostra_A)
     desvio_padrao_B = desvio_padrao(amostra_B)
-    print(desvio_padrao_A)
-    print(desvio_padrao_B)
     constante_A = round(((desvio_padrao_A**2)/len(amostra_A)), 3)
     constante_B = round(((desvio_padrao_B**2)/len(amostra_B)), 3)
-    print(f'constante A -> {constante_A}')
-    print(f'constante B -> {constante_B}')
     desvio_padrao_das_diferencas = round((math.sqrt(constante_A+constante_A)),3)
     numerador_liberdade = (constante_A+constante_B)**2
-    print(desvio_padrao_das_diferencas)
     variavel_A = abs(round(((1/len(amostra_A)-1)*(constante_A**2)), 3))
     variavel_B = abs(round(((1/len(amostra_B)-1)*(constante_B**2)), 3))
-    print(variavel_A)
-    print(variavel_B)
     grau_de_liberdade = round((numerador_liberdade/(variavel_A+variavel_B)))
-    print(f'grau de liberdade {grau_de_liberdade}')
     return intervalo_nao_paralelo(diferenca_media_amostral, desvio_padrao_das_diferencas, grau_de_liberdade, nivel_de_confianca)
 
 
+#TAMANHO DE UMA AMOSTRA
+def tamanho_de_amostra(desvio_padrao, largura, nivel_de_confianca):
+    confianca = round((nivel_de_confianca/100),2)
+    alpha = 1 - confianca
+    alpha_barra = round(((1+confianca)/2), 3)
+    z_score = scipy.stats.norm.ppf(alpha_barra)
+    numerador = (((desvio_padrao*z_score)**2)*4)
+    tamanho_amostra = (numerador/(largura**2))
+    return int(tamanho_amostra)
 
-amostra_A = [5.3, 16, 0.6, 1.4, 0.6, 7.7, 3.6, 2.4, 12,
-             6, 57, 2, 1, 4, 6, 4, 8, 1]
 
-amostra_B = [19, 3.5, 3.3, 2.5, 3.6, 1.7, 12, 2, 8, 1, 1, 4]
-
-print(amostras_nao_pareadas(amostra_A, amostra_B, 90) )
+print(tamanho_de_amostra(desvio_padrao=6, nivel_de_confianca=95, largura=3))
 
 
+def tamanho_amostra_com_precisao(media_amostral, desvio_padrao, precisao, nivel_de_confianca):
+    intervalo_inferior = round((media_amostral*(1-(precisao/100))), 3)
+    intervalo_superior = round((media_amostral*(1+(precisao/100))), 3)
+    largura =
+    return [intervalo_inferior, intervalo_superior]
 
-'''
-sistema_A = [5.4, 16.6, 0.6, 1.4, 0.6, 7.3]
-sistema_B = [19.1, 3.5, 3.4, 2.5, 3.6, 1.7]
-teste_media_zero(intervalo_de_confianca(subtrai_sistemas(sistema_A, sistema_B), 90)) 
-teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 95) 
-teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 99)
 
-exercicio_dois = [1.5, 2.6, -1.8, 1.3, -0.5, 1.7, 2.4] 
-teste_media_zero(exercicio_dois, 99)
-'''
+d
+
+
+
 
 def calcula_distribuicao_normal_cdf(z):
     t = 1.0 / (1.0 + 0.2316419 * abs(z))
@@ -240,4 +235,26 @@ resultado = teste_hipotese_z(media_amostral, media_nula, desvio_padrao_populacio
 #print(resultado)
 
 
+'''
+amostra_A = [5.3, 16, 0.6, 1.4, 0.6, 7.7, 3.6, 2.4, 12,
+             6, 57, 2, 1, 4, 6, 4, 8, 1]
+
+amostra_B = [19, 3.5, 3.3, 2.5, 3.6, 1.7, 12, 2, 8, 1, 1, 4]
+
+print(amostras_nao_pareadas(amostra_A, amostra_B, 95) )
+intervalo = amostras_nao_pareadas(amostra_A, amostra_B, 95)
+print(intervalo)
+print(teste_media_zero(intervalo))
+
+
+
+sistema_A = [5.4, 16.6, 0.6, 1.4, 0.6, 7.3]
+sistema_B = [19.1, 3.5, 3.4, 2.5, 3.6, 1.7]
+teste_media_zero(intervalo_de_confianca(subtrai_sistemas(sistema_A, sistema_B), 90)) 
+teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 95) 
+teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 99)
+
+exercicio_dois = [1.5, 2.6, -1.8, 1.3, -0.5, 1.7, 2.4] 
+teste_media_zero(exercicio_dois, 99)
+'''
 
