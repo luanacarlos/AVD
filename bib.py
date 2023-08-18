@@ -297,3 +297,125 @@ print(f"P(1 <= Y <= 16): {p_interval:.2f}")
 p_interval_exclusive = sum(p for y, p in zip(y_values, p_values) if 1 < y < 16)
 print(f"P(1 < Y < 16): {p_interval_exclusive:.2f}")
 
+#até o slide 123
+
+#Variável Aleatória de Bernoulli 
+
+import math
+
+def valor_esperado_bernoulli(p):
+    return 0 * (1 - p) + 1 * p
+
+def variancia_bernoulli(p):
+    return p * (1 - p)
+
+def coeficiente_variacao_bernoulli(p):
+    return math.sqrt(variancia_bernoulli(p)) / valor_esperado_bernoulli(p)
+
+# Parâmetro p da variável Bernoulli
+p = 0.3
+
+# Calculando e imprimindo os resultados
+esperanca = valor_esperado_bernoulli(p)
+variancia = variancia_bernoulli(p)
+coef_variacao = coeficiente_variacao_bernoulli(p)
+
+print(f"Valor Esperado (E[X]): {esperanca}")
+print(f"Variancia (Var[X]): {variancia}")
+print(f"Coeficiente de Variacao (CV[X]): {coef_variacao}")
+
+
+#exemplo slide 114
+
+import math
+
+def probabilidade_binomial(n, k, p):
+    return math.comb(n, k) * (p ** k) * ((1 - p) ** (n - k))
+
+# Parâmetros do problema
+n = 10
+k = 6
+p = 0.75
+
+# Calculando a probabilidade
+probabilidade = probabilidade_binomial(n, k, p)
+
+print(f"A probabilidade de exatamente {k} estudantes usarem notebook eh {probabilidade:.4f}")
+
+#Variável Aleatória Geométrica
+
+import math
+
+def valor_esperado_geometrica(p):
+    return 1 / p
+
+def variancia_geometrica(p):
+    return (1 - p) / (p ** 2)
+
+def coeficiente_variacao_geometrica(p):
+    return math.sqrt(variancia_geometrica(p)) / (1 / p)
+
+# Parâmetro p da variável geométrica
+p = 0.3
+
+# Calculando e imprimindo os resultados
+esperanca = valor_esperado_geometrica(p)
+variancia = variancia_geometrica(p)
+coef_variacao = coeficiente_variacao_geometrica(p)
+
+print(f"Valor Esperado (E[X]): {esperanca}")
+print(f"Variância (Var[X]): {variancia}")
+print(f"Coeficiente de Variação (CV[X]): {coef_variacao}")
+
+#exemplo slide 118 
+def probabilidade_retransmissao(p, i):
+    return p * ((1 - p) ** (i - 1))
+
+# Parâmetros do problema
+p = 0.9
+
+# Calculando e imprimindo as probabilidades de retransmissão
+for i in range(1, 4):
+    prob = probabilidade_retransmissao(p, i)
+    print(f"Probabilidade de retransmissão em {i} vezes: {prob:.4f}")
+
+#Variável Aleatória Poisson 
+import math
+
+def valor_esperado_poisson(lambd):
+    return lambd
+
+def variancia_poisson(lambd):
+    return lambd
+
+def coeficiente_variacao_poisson(lambd):
+    return math.sqrt(lambd) / lambd
+
+# Parâmetro lambda da distribuição de Poisson
+lambd = 3.0
+
+# Calculando e imprimindo os resultados
+esperanca = valor_esperado_poisson(lambd)
+variancia = variancia_poisson(lambd)
+coef_variacao = coeficiente_variacao_poisson(lambd)
+
+print(f"Valor Esperado (E[X]): {esperanca}")
+print(f"Variância (Var[X]): {variancia}")
+print(f"Coeficiente de Variação (CV[X]): {coef_variacao}")
+
+
+
+
+#Exemplo slide 122
+def probabilidade_poisson(lambd, k):
+    prob = sum((math.exp(-lambd) * (lambd ** i) / math.factorial(i)) for i in range(k + 1))
+    return prob
+
+# Parâmetros do problema
+lambd = 2  # Fluxo de chegadas por minuto
+k = 3  # Número máximo de jobs desejado
+
+# Calculando e imprimindo a probabilidade
+prob_max_tres_jobs = probabilidade_poisson(lambd, k)
+
+print(f"Probabilidade de chegarem no máximo três jobs: {prob_max_tres_jobs:.4f}")
