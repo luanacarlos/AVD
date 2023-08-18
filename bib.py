@@ -184,17 +184,14 @@ def tamanho_de_amostra(desvio_padrao, largura, nivel_de_confianca):
 
 print(tamanho_de_amostra(desvio_padrao=6, nivel_de_confianca=95, largura=3))
 
-
+"""
 def tamanho_amostra_com_precisao(media_amostral, desvio_padrao, precisao, nivel_de_confianca):
     intervalo_inferior = round((media_amostral*(1-(precisao/100))), 3)
     intervalo_superior = round((media_amostral*(1+(precisao/100))), 3)
     largura =
     return [intervalo_inferior, intervalo_superior]
 
-
-d
-
-
+"""
 
 
 def calcula_distribuicao_normal_cdf(z):
@@ -257,4 +254,46 @@ teste_media_zero(subtrai_sistemas(sistema_A, sistema_B), 99)
 exercicio_dois = [1.5, 2.6, -1.8, 1.3, -0.5, 1.7, 2.4] 
 teste_media_zero(exercicio_dois, 99)
 '''
+
+# -------------- INICIO LIBS DE CONCEITOS DE PROBABILIDADE --------------
+
+#Exercicio slide 105 
+import math 
+
+def calcula_media_varianca_VA(dados_x, dados_p) :
+    media  = sum(x * p for x, p in zip(dados_x, dados_p))
+    variancia = sum((x - media) ** 2 * p for x, p in zip(dados_x, dados_p))
+    
+    return media, variancia
+
+"""
+dados_x = [16, 17, 18, 19, 20, 21, 22]
+dados_p = [0.05, 0.10, 0.15, 0.25, 0.20, 0.15, 0.10]
+
+media, variancia = calcula_media_varianca_VA(dados_x, dados_p)
+
+std_deviation = math.sqrt(variancia)
+
+print(f"medida (Esperança): {media:.2f}")
+print(f"variancia: {variancia:.2f}")
+print(f"Standard Deviation: {std_deviation:.2f}")
+
+"""
+
+#Exercicio Slide 106
+#a)
+p_4 = 0.05 # P(y) associada a y = 2 (2 * 2 = 4)
+print(f"p(4): {p_4:.2f}")
+
+#b)P(1 <= Y <= 16) 
+p_values = [0.01, 0.05, 0.25, 0.35, 0.30]
+y_values = [0, 1, 4, 9, 16]
+
+p_interval = sum(p for y, p in zip(y_values, p_values) if 1 <= y <= 16)
+print(f"P(1 <= Y <= 16): {p_interval:.2f}")
+
+
+#c) P(1 < Y < 16)
+p_interval_exclusive = sum(p for y, p in zip(y_values, p_values) if 1 < y < 16)
+print(f"P(1 < Y < 16): {p_interval_exclusive:.2f}")
 
