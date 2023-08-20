@@ -257,6 +257,39 @@ teste_media_zero(exercicio_dois, 99)
 
 # -------------- INICIO LIBS DE CONCEITOS DE PROBABILIDADE --------------
 
+
+def calcular_valor_esperado_VA_discreta(valores, probabilidades):
+    if len(valores) != len(probabilidades):
+        raise ValueError("Os tamanhos das listas de valores e probabilidades devem ser iguais.")
+    
+    valor_esperado = 0
+    for i in range(len(valores)):
+        valor_esperado += valores[i] * probabilidades[i]
+    
+    return valor_esperado
+
+
+def calcular_esperanca(probabilidades, valores):
+    esperanca = sum(p * x for p, x in zip(probabilidades, valores))
+    return esperanca
+
+def calcular_variancia(probabilidades, valores, esperanca):
+    esperanca_quadrada = sum(p * x**2 for p, x in zip(probabilidades, valores))
+    variancia = esperanca_quadrada - esperanca**2
+    return variancia
+
+# Distribuição de probabilidade
+probabilidades = [1/4, 1/8, 1/8, 1/2]
+valores = [2, 1, 2, 3]
+
+# Calculando a esperança
+esperanca = calcular_esperanca(probabilidades, valores)
+
+# Calculando a variância
+variancia = calcular_variancia(probabilidades, valores, esperanca)
+
+
+
 #Exercicio slide 105 
 import math 
 
@@ -324,9 +357,42 @@ print(f"Valor Esperado (E[X]): {esperanca}")
 print(f"Variancia (Var[X]): {variancia}")
 print(f"Coeficiente de Variacao (CV[X]): {coef_variacao}")
 
+#Variável Aleatória Binomial
+
+import math
+
+def calcular_valor_esperado(n, p):
+    valor_esperado = n * p
+    return valor_esperado
+
+def calcular_variancia(n, p):
+    variancia = n * p * (1 - p)
+    return variancia
+
+def calcular_coeficiente_variacao(n, p):
+    coeficiente_variacao = math.sqrt(n * p * (1 - p)) / n
+    return coeficiente_variacao
+
+# Parâmetros da distribuição binomial
+n = 10  # Número de tentativas
+p = 0.3  # Probabilidade de sucesso
+
+# Calculando o valor esperado
+esperanca = calcular_valor_esperado(n, p)
+print("Valor Esperado:", esperanca)
+
+# Calculando a variância
+variancia = calcular_variancia(n, p)
+print("Variância:", variancia)
+
+# Calculando o coeficiente de variação
+coef_variacao = calcular_coeficiente_variacao(n, p)
+print("Coeficiente de Variação:", coef_variacao)
+
+
+
 
 #exemplo slide 114
-
 import math
 
 def probabilidade_binomial(n, k, p):
