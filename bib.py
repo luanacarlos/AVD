@@ -193,6 +193,22 @@ def tamanho_amostra_com_precisao(media_amostral, desvio_padrao, precisao, nivel_
 
 """
 
+def tamanho_de_amostra_var_desconhecida(desvio_padrao_amostra, largura_intervalo, nivel_de_confianca):
+    confianca = nivel_de_confianca / 100
+    alpha = 1 - confianca
+    t_score = scipy.stats.t.ppf(1 - alpha/2, df=math.inf)  # Usando infinitos graus de liberdade
+    
+    n_numerador = (t_score * (desvio_padrao_amostra / largura_intervalo)) ** 2
+    n_denominador = 4 * (desvio_padrao_amostra / largura_intervalo) ** 2
+    
+    tamanho_amostra = math.ceil(max(n_numerador, n_denominador)) 
+    return tamanho_amostra
+
+def tamanho_de_amostra_por_precisao(desvio_padrao, nivel_de_confianca, precisao_percentual, media_estimada):
+    z_score = scipy.stats.norm.ppf(1 - (1 - nivel_de_confianca) / 2)
+    
+    tamanho_amostra = math.ceil((100 * desvio_padrao * z_score) / (precisao_percentual * media_estimada))
+    return tamanho_amostra
 
 def calcula_distribuicao_normal_cdf(z):
     t = 1.0 / (1.0 + 0.2316419 * abs(z))
@@ -269,35 +285,43 @@ def calcular_valor_esperado_VA_discreta(valores, probabilidades):
     return valor_esperado
 
 
-def calcular_esperanca(probabilidades, valores):
-    esperanca = sum(p * x for p, x in zip(probabilidades, valores))
-    return esperanca
+# Valores de x e suas probabilidades associadas
+x_values = [-1, 1, 2, 3]
+p_values = [1/4, 1/8, 1/8, 1/2]
 
-def calcular_variancia(probabilidades, valores, esperanca):
-    esperanca_quadrada = sum(p * x**2 for p, x in zip(probabilidades, valores))
-    variancia = esperanca_quadrada - esperanca**2
-    return variancia
+# Cálculo do valor esperado E[X^2]
+E_X2 = sum([(x ** 2) * p for x, p in zip(x_values, p_values)])
 
-# Distribuição de probabilidade
-probabilidades = [1/4, 1/8, 1/8, 1/2]
-valores = [2, 1, 2, 3]
+# Cálculo do valor esperado E[X]
+E_X = sum([x * p for x, p in zip(x_values, p_values)])
 
-# Calculando a esperança
-esperanca = calcular_esperanca(probabilidades, valores)
+# Cálculo da variância Var[X]
+Var_X = E_X2 - (E_X ** 2)
 
-# Calculando a variância
-variancia = calcular_variancia(probabilidades, valores, esperanca)
+print("E[X^2] =", format(E_X2, ".3f"))
+print("E[X] =", format(E_X, ".3f"))
+print("Var[X] =", format(Var_X, ".3f"))
 
 
 
 #Exercicio slide 105 
 import math 
 
-def calcula_media_varianca_VA(dados_x, dados_p) :
-    media  = sum(x * p for x, p in zip(dados_x, dados_p))
-    variancia = sum((x - media) ** 2 * p for x, p in zip(dados_x, dados_p))
-    
-    return media, variancia
+# Valores de x e suas probabilidades associadas
+x_values = [16, 17, 18, 19, 20, 21, 22]
+p_values = [0.05, 0.10, 0.15, 0.25, 0.20, 0.15, 0.10]
+
+# Cálculo do valor esperado E[X]
+E_X = sum([x * p for x, p in zip(x_values, p_values)])
+
+# Cálculo do valor esperado E[X^2]
+E_X2 = sum([(x ** 2) * p for x, p in zip(x_values, p_values)])
+
+# Cálculo da variância Var[X]
+Var_X = E_X2 - (E_X ** 2)
+
+print("Média (E[X]):", format(E_X, ".2f"))
+print("Variância (Var[X]):", format(Var_X, ".2f"))
 
 """
 dados_x = [16, 17, 18, 19, 20, 21, 22]
