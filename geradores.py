@@ -27,9 +27,37 @@ def metodo_quadrado_central(z0, quantidade):
     return lista
     
     
-def gerador_linear_congruencial():
+def gerador_linear_congruencial(a, c, m, quantidade):
+    if quantidade <= m:
+        lista = []
+        iteracoes = 0
+        while iteracoes < quantidade:
+            n =  ((a*iteracoes) + c)%m 
+            lista.append(n/m)
+            iteracoes += 1
+        
+        return lista
+
+    else: 
+        print('Não é possivel gerar essa quantidade de numeros com os parametros dados')
     
-    
-print(metodo_quadrado_central(1234, 30))
+#print(metodo_quadrado_central(1234, 30))
+numeros = gerador_linear_congruencial(25214903917, 11, 2**48, 10)
+
+import matplotlib.pyplot as plt
+
+
+# Criar um gráfico de linha
+plt.plot(numeros)
+
+# Adicionar rótulos aos eixos x e y
+plt.xlabel('Índice')
+plt.ylabel('Números')
+
+# Adicionar um título ao gráfico
+plt.title('Gráfico de Números')
+
+# Mostrar o gráfico
+plt.show()
 
         
