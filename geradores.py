@@ -1,5 +1,6 @@
 from bib import *             # importar apenas as funcoes que serao utilizadas
 import random         # Gerador de NA do Python
+import math
 
 
 def preenche_digitos(numero):
@@ -76,3 +77,10 @@ plt.title('Gráfico de Números')
 # Mostrar o gráfico
 plt.show()
 """
+
+
+def gerar_variavel_exponencial(numeros_gerados, taxa_lambda):
+    index_aleatorio = random.randint(0, 4998)
+    numero_aleatorio = numeros_gerados[index_aleatorio]
+    variavel_exponencial = -np.log(1 - numero_aleatorio) / taxa_lambda
+    return variavel_exponencial
