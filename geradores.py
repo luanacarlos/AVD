@@ -1,4 +1,5 @@
 from bib import *             # importar apenas as funcoes que serao utilizadas
+import random         # Gerador de NA do Python
 
 
 def preenche_digitos(numero):
@@ -40,11 +41,26 @@ def gerador_linear_congruencial(a, c, m, quantidade):
 
     else: 
         print('Não é possivel gerar essa quantidade de numeros com os parametros dados')
+        
+def gerador_python(semente, quantidade):
+    iteracoes = 0
+    lista = []
+    numero = 0
+    random.seed(semente)
+    while iteracoes < quantidade:
+        numero = random.random()
+        lista.append(numero)
+        iteracoes += 1
+        
+    return lista
+        
     
+  
 #print(metodo_quadrado_central(1234, 30))
-numeros = gerador_linear_congruencial(25214903917, 11, 2**48, 10)
+#numeros = gerador_linear_congruencial(25214903917, 11, 2**48, 5000)
+print(gerador_python(123, 100))
 
-import matplotlib.pyplot as plt
+"""import matplotlib.pyplot as plt
 
 
 # Criar um gráfico de linha
@@ -59,5 +75,4 @@ plt.title('Gráfico de Números')
 
 # Mostrar o gráfico
 plt.show()
-
-        
+"""
