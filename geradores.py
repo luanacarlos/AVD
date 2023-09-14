@@ -1,5 +1,6 @@
 from bib import *             # importar apenas as funcoes que serao utilizadas
 import random         # Gerador de NA do Python
+import math
 from scipy.stats import chi2
 
 
@@ -119,6 +120,7 @@ plt.title('Gráfico de Números')
 plt.show()
 """
 
+<<<<<<< HEAD
 import math
 
 def va_exponencial_com_g1(quantidade, a, c, m, taxa):
@@ -139,3 +141,11 @@ va_g1 = va_exponencial_com_g1(quantidade, 12351, 1, 2**15, taxa)
 # Usando g5 para gerar variáveis exponenciais
 va_g5 = va_exponencial_com_g5(quantidade, taxa)
 
+=======
+
+def gerar_variavel_exponencial(numeros_gerados, taxa_lambda):
+    index_aleatorio = random.randint(0, 4998)
+    numero_aleatorio = numeros_gerados[index_aleatorio]
+    variavel_exponencial = -np.log(1 - numero_aleatorio) / taxa_lambda
+    return variavel_exponencial
+>>>>>>> 8ede1d854e4f04b67eb70c7dbc2934e384517943
