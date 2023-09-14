@@ -108,7 +108,7 @@ def intervalo_de_confianca_maior_30(dados, nivel_de_confianca):
     alpha_barra = 1 - (alpha/2)
     distribuicao_normal = scipy.stats.norm.ppf(alpha_barra)
     constante = distribuicao_normal*desvio_padrao(dados)/(math.sqrt(len(dados)))
-    return[round((media_aritmetica(dados)-constante),3), round((media_aritmetica(dados)+constante), 3)]
+    return[round((media_aritmetica(dados)-constante),6), round((media_aritmetica(dados)+constante), 6)]
 
 
 def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
@@ -117,7 +117,7 @@ def intervalo_de_confianca_menor_30(dados, nivel_de_confianca):
     alpha_barra = 1 - (alpha/2)
     t_student = scipy.stats.t.ppf(alpha_barra, (len(dados)-1))
     constante = constante = t_student * (desvio_padrao(dados) / (math.sqrt(len(dados))))
-    return[round((media_aritmetica(dados)-constante), 3), round((media_aritmetica(dados)+constante), 3)]
+    return[round((media_aritmetica(dados)-constante), 6), round((media_aritmetica(dados)+constante), 6)]
 
 
 def intervalo_de_confianca(dados, nivel_de_confianca):

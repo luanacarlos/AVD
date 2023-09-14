@@ -120,6 +120,20 @@ plt.title('Gráfico de Números')
 plt.show()
 """
 
+g1 = gerador_linear_congruencial(12351, 1, 2**15, 5000)
+g5 = gerador_python(5000)
+
+def gerar_variavel_exponencial(numeros_gerados):
+    beta = 1/9
+    index_aleatorio = random.randint(0, 4998)
+    U = numeros_gerados[index_aleatorio]
+    Va_exponencial = -beta * math.log(1 - U)
+
+    return Va_exponencial
+
+VA_exponencial_g1 = gerar_variavel_exponencial(g1)
+VA_exponencial_g5 = gerar_variavel_exponencial(g5)
+
 <<<<<<< HEAD
 import math
 
