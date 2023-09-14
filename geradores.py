@@ -79,21 +79,21 @@ def chi_squared_test(generator_output, k):
     
     # Comparar o valor calculado de chi_squared com o valor crítico
     if chi_squared < critical_value:
-        return "Aceita a hipotese nula. Os numeros sao aleatorios."
+        return "Aceita a hipotese nula. Os números sao aleatórios."
     else:
-        return "Rejeita a hipotese nula. Os numeros nao sao aleatorios."
+        return "Rejeita a hipotese nula. Os números nao sao aleatórios."
     
 # Parâmetros para o gerador G1
 a1 = 12351
 c1 = 1
 m1 = 2**15
-quantidade1 = 10000  # Ajuste a quantidade conforme necessário
+quantidade1 = 5000  # Ajuste a quantidade conforme necessário
 
 # Gerar a sequência de números pseudoaleatórios
-output1 = metodo_quadrado_central(7182, 1000)
+output1 = gerador_linear_congruencial(a1, c1, m1, quantidade1)
 
 # Realizar o teste do qui-quadrado
-k1 = 10  # Número de intervalos
+k1 = 1000  # Número de intervalos
 result1 = chi_squared_test(output1, k1)
 print(result1)
 
@@ -118,3 +118,24 @@ plt.title('Gráfico de Números')
 # Mostrar o gráfico
 plt.show()
 """
+
+import math
+
+def va_exponencial_com_g1(quantidade, a, c, m, taxa):
+    g1 = gerador_linear_congruencial(a, c, m, quantidade)
+    return [- (1 / taxa) * math.log(1 - u) for u in g1]
+
+def va_exponencial_com_g5(quantidade, taxa):
+    g5 = gerador_python(quantidade)
+    return [- (1 / taxa) * math.log(1 - u) for u in g5]
+
+# Parâmetros da distribuição exponencial
+taxa = 0.5  # Substitua pela taxa desejada
+quantidade = 5000  # Substitua pelo número desejado de amostras
+
+# Usando g1 para gerar variáveis exponenciais
+va_g1 = va_exponencial_com_g1(quantidade, 12351, 1, 2**15, taxa)
+
+# Usando g5 para gerar variáveis exponenciais
+va_g5 = va_exponencial_com_g5(quantidade, taxa)
+
