@@ -15,49 +15,56 @@ def gerador_tempos(n, taxa_chegada=1, taxa_servico=1):
     return saida
 
 
-def simulador_mm1(n, taxa_chegada, taxa_servico):
+def simulador_mm1(n, taxa_chegada, taxa_servico):   
+    tempos_aleatorios = [variavel_aleatoria_exponencial(taxa_chegada), variavel_aleatoria_exponencial(taxa_servico), 0]
     fila = []                                                               #onde esperam
-    tempos_aleatorios = gerador_tempos(n, taxa_chegada, taxa_servico)
-    atendidos = []                                                          #terminaram o atendimento
-    em_servico = tempos_aleatorios.pop(0)
+    atendidos = np.zeros(n)                                                      #terminaram o atendimento
+    em_servico = tempos_aleatorios
     clock = em_servico[0]
+    iterador = 0
 
 
-    while tempos_aleatorios or fila:
-        if tempos_aleatorios and em_servico[1] > tempos_aleatorios[0][0]:
-            clock += tempos_aleatorios[0][0] 
-            em_servico[1] -= tempos_aleatorios[0][0] 
-            fila.append(tempos_aleatorios.pop(0)) 
+    while iterador < n or fila:
+        if iterador < n:
+            tempos_aleatorios = [variavel_aleatoria_exponencial(taxa_chegada), variavel_aleatoria_exponencial(taxa_servico), 0]
+        else:
+            tempos_aleatorios = []
+
+        if tempos_aleatorios and em_servico[1] > tempos_aleatorios[0]:
+            clock += tempos_aleatorios[0] 
+            em_servico[1] -= tempos_aleatorios[0] 
+            fila.append(tempos_aleatorios) 
             fila[-1][2] = clock
 
-        elif tempos_aleatorios and em_servico[1] == tempos_aleatorios[0][0]:
-            clock += tempos_aleatorios[0][0] 
-            fila.append(tempos_aleatorios.pop(0)) 
+        elif tempos_aleatorios and em_servico[1] == tempos_aleatorios[0]:
+            clock += tempos_aleatorios[0]
+            fila.append(tempos_aleatorios) 
             fila[-1][2] = clock
-            atendidos.append(em_servico[2])
+            atendidos[iterador] = em_servico[2]
             em_servico = fila.pop(0)
             em_servico[2] = clock-em_servico[2]
 
-        elif tempos_aleatorios and em_servico[1] < tempos_aleatorios[0][0]:
+        elif tempos_aleatorios and em_servico[1] < tempos_aleatorios[0]:
             clock += em_servico[1]
-            tempos_aleatorios[0][0] -= em_servico[1]
-            atendidos.append(em_servico[2])
+            tempos_aleatorios[0] -= em_servico[1]
+            atendidos[iterador] = em_servico[2]
 
             if fila:
                 em_servico = fila.pop(0)
                 em_servico[2] = clock - em_servico[2]
             
             else:
-                clock += tempos_aleatorios[0][0]
+                clock += tempos_aleatorios[0]
                 em_servico = tempos_aleatorios.pop(0)
 
         elif not tempos_aleatorios and fila:
             clock += em_servico[1]
-            atendidos.append(em_servico[2])
+            atendidos[iterador] = em_servico[2]
             em_servico = fila.pop(0)
             em_servico[2] = clock - em_servico[2]
     
-    atendidos.append(em_servico[2])
+    atendidos[iterador] = em_servico[2]
+    iterador++
     
     return atendidos
 
