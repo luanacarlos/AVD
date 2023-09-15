@@ -2,6 +2,7 @@ import random
 import math
 import time
 import numpy as np
+from bib import intervalo_de_confianca
 
 start = time.time()
 
@@ -27,7 +28,6 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
 
 
     while iterador < n or fila:
-        print(iterador)
         if iterador < n:
             chegada = variavel_aleatoria_exponencial(taxa_chegada)
             servico = variavel_aleatoria_exponencial(taxa_servico)
@@ -39,6 +39,7 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
                 em_servico[1] -= chegada 
                 fila.append([chegada, servico, espera]) 
                 fila[-1][2] = clock
+                
 
             elif em_servico[1] == chegada:
                 clock += chegada
@@ -47,30 +48,36 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
                 atendidos[iterador] = em_servico[2]
                 em_servico = fila.pop(0)
                 em_servico[2] = clock-em_servico[2]
+                iterador += 1
 
             elif em_servico[1] < chegada:
                 clock += em_servico[1]
                 chegada -= em_servico[1]
                 atendidos[iterador] = em_servico[2]
+                iterador += 1
 
                 if fila:
                     em_servico = fila.pop(0)
                     em_servico[2] = clock - em_servico[2]
+                    
                 
                 else:
                     clock += chegada
                     em_servico = [chegada, servico, espera]
+                    
+
+            
                 
 
         else:
 
             if fila:
                 clock += em_servico[1]
-                atendidos[iterador] = em_servico[2]
+                atendidos[-1] = em_servico[2]
                 em_servico = fila.pop(0)
                 em_servico[2] = clock - em_servico[2]
         
-        iterador += 1
+        
         
         
     #atendidos[iterador] = em_servico[2]
@@ -80,6 +87,7 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
 
 
 
-print(simulador_mm1(10**1, 9, 10))
+tempos = simulador_mm1(10**8, 9, 10)
+print(intervalo_de_confianca(tempos, 95))
 end = time.time()
 print(f'Tempo de execução = {end-start} segundos')
