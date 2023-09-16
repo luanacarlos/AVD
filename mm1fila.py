@@ -67,8 +67,6 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
                     
 
             
-                
-
         else:
 
             if fila:
@@ -76,6 +74,8 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
                 atendidos[-1] = em_servico[2]
                 em_servico = fila.pop(0)
                 em_servico[2] = clock - em_servico[2]
+                
+        
         
         
         
@@ -87,7 +87,9 @@ def simulador_mm1(n, taxa_chegada, taxa_servico):
 
 
 
-tempos = simulador_mm1(10**8, 9, 10)
-print(intervalo_de_confianca(tempos, 95))
+tempos = simulador_mm1(10**5, 9, 10)
+print(f'Valor de espera segundo teoria das filas = {9/10}')
+print(f'Intervalo de Confiança = {intervalo_de_confianca(tempos, 95)}')
 end = time.time()
 print(f'Tempo de execução = {end-start} segundos')
+print(f'Media de espera na fila = {sum(tempos)/len(tempos)}')
