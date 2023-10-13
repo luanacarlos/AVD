@@ -49,13 +49,12 @@ def imprimir_tabela_2_repeat_1(tabela):
         print("{:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2],  linha[3], str(linha[4])))
 
 def imprimir_tabela_2_repeat_maior1(tabela):
-    print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^25}".format("A", "B", "C", "AB", "Y", "yMedia"))
+    print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^25}".format("1", "A", "B", "AB", "Y", "yMedia"))
     for linha in tabela:
         if len(linha) >= 6:
             print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^10}".format(linha[0], linha[1], linha[2], linha[3], str(linha[4]), linha[5]))
 
-def tabela_de_sinais_2():
-    repeticoes =  3
+def tabela_de_sinais_2(repeticoes):
     tabela = []
     for i in [-1, 1]:
         for j in [-1, 1]:
@@ -75,13 +74,6 @@ def tabela_de_sinais_2():
             tabela.append(linha)
     return tabela
 
-
-
-
-# Tabela atual - pre resultados
-tabela = tabela_de_sinais_2()
-imprimir_tabela_2_repeat_1(tabela)
-
 # Adicionar resultados - Repeticoes maior que 1
 def calcula_yMedia(tabela, repeticoes):
     soma_y = 0
@@ -90,8 +82,20 @@ def calcula_yMedia(tabela, repeticoes):
             soma_y = sum(linha[4])/ repeticoes
             linha.append(soma_y) #Coluna Y Media
 
-calcula_yMedia(tabela, 3)
-imprimir_tabela_2_repeat_maior1(tabela)
+
+k = int(input("Digite o valor de K: "))
+repeticoes = int(input("Digite o valor de repeticoes: "))
+if k == 2:
+    if repeticoes == 1:
+        tabela = tabela_de_sinais_2(repeticoes)
+        adicionar_resultado_repeat_1(tabela)
+        imprimir_tabela_2_repeat_1(tabela)
+    else:
+        tabela = tabela_de_sinais_2(repeticoes)
+        calcula_yMedia(tabela, repeticoes)
+        imprimir_tabela_2_repeat_maior1(tabela)
+else:
+    print("TODO()")
 
 # PARA K = 3
 def tabela_de_sinais3(k,repeticoes):
