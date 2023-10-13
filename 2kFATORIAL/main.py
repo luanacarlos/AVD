@@ -123,4 +123,3 @@ def imprimir_tabela_3(tabela):
 
 
 
-print ("Digite o valor de K: ")
