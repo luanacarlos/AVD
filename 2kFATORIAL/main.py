@@ -177,69 +177,90 @@ imprimir_tabela_3(tabela)
 # adicionar_resultado_3_repeat_1(tabela)
 
 ##FUNCAO PARA CALCULAR OS RESULTADOS E COLOCAR NA TABELA - REPETIÇÔES 
-y = []
+def adicionar_resultado_repeat3_1(tabela, k):
+    y = []
 
-# Multiplicar a coluna Y pela coluna 1
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[0])
-y.append(sum)
+    # Multiplicar a coluna Y pela coluna 1
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[0])
+    y.append(sum)
 
-#COLUNA A*Y 
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[1])
-y.append(sum)
+    #COLUNA A*Y 
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[1])
+    y.append(sum)
 
-#COLUNA B*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[2])
-y.append(sum)
+    #COLUNA B*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[2])
+    y.append(sum)
 
-#COLUNA C*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[3])
-y.append(sum)
+    #COLUNA C*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[3])
+    y.append(sum)
 
-#COLUNA AB*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[4])
-y.append(sum)
+    #COLUNA AB*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[4])
+    y.append(sum)
 
-#COLUNA AC*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[5])
-y.append(sum)
+    #COLUNA AC*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[5])
+    y.append(sum)
 
-#COLUNA BC*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[6])
-y.append(sum)
+    #COLUNA BC*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[6])
+    y.append(sum)
 
-#COLUNA ABC*Y
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[7])
-y.append(sum)
+    #COLUNA ABC*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[7])
+    y.append(sum)
 
-#SÓ COLOCAR TOTAL lA MESMO
-y.append("Total")
-tabela.append(y)
+    #SÓ COLOCAR TOTAL lA MESMO
+    y.append("Total")
+    tabela.append(y)
 
-#lINHA ABAIXO QUE TEM OS RESULTAODS DIVIDIDO POR 4
-new_y = []
-for i in range (len(y)-1):
-    new_y.append(y[i] /2**k)
-new_y.append("Total/4")
-tabela.append(new_y)  
+    #lINHA ABAIXO QUE TEM OS RESULTAODS DIVIDIDO POR 4
+    new_y = []
+    for i in range (len(y)-1):
+        new_y.append(y[i] /2**k)
+    new_y.append("Total/4")
+    tabela.append(new_y)  
 
 
 
-print(tabela)
+#teste para k = 2
+k = int(input("Digite o valor de K: "))
+repeticoes = int(input("Digite o valor de repeticoes: "))
+if k == 2:
+    if repeticoes == 1:
+        tabela = tabela_de_sinais_2(repeticoes)
+        adicionar_resultado_repeat_1(tabela)
+        imprimir_tabela_2_repeat_1(tabela)
+    else:
+        tabela = tabela_de_sinais_2(repeticoes)
+        calcula_yMedia(tabela, repeticoes)
+        adicionar_resultado_repeat_maior1(tabela)
+        imprimir_tabela_2_repeat_maior1(tabela)
+if k == 3:
+    if repeticoes == 1 :
+        tabela = tabela_de_sinais3(k, repeticoes)
+        adicionar_resultado_repeat3_1(tabela, k)
+        imprimir_tabela_3(tabela)
+    else:
+        print("TODO()")
 
-imprimir_tabela_3(tabela)
+else:
+    print("TODO()")
