@@ -241,26 +241,57 @@ def adicionar_resultado_repeat3_1(tabela, k):
 
 
 
-#teste para k = 2
-k = int(input("Digite o valor de K: "))
-repeticoes = int(input("Digite o valor de repeticoes: "))
-if k == 2:
-    if repeticoes == 1:
-        tabela = tabela_de_sinais_2(repeticoes)
-        adicionar_resultado_repeat_1(tabela)
-        imprimir_tabela_2_repeat_1(tabela)
-    else:
-        tabela = tabela_de_sinais_2(repeticoes)
-        calcula_yMedia(tabela, repeticoes)
-        adicionar_resultado_repeat_maior1(tabela)
-        imprimir_tabela_2_repeat_maior1(tabela)
-if k == 3:
-    if repeticoes == 1 :
-        tabela = tabela_de_sinais3(k, repeticoes)
-        adicionar_resultado_repeat3_1(tabela, k)
-        imprimir_tabela_3(tabela)
-    else:
-        print("TODO()")
+print(tabela)
 
-else:
-    print("TODO()")
+imprimir_tabela_3(tabela)
+
+
+
+#SST
+def sst(y):
+    y_mean = sum(y) / len(y)
+    return sum([(yi - y_mean)**2 for yi in y])
+
+#Soma dos quadrados do fator A
+def ssa(y, qa, qab):
+    y_mean = sum(y) / len(y)
+    a_means = [sum(yi) / len(yi) for yi in qa]
+    return sum([len(yi) * (ai - y_mean)**2 for ai, yi in zip(a_means, qa)])
+
+#Soma dos quadrados do fator B
+def ssb(y, qb, qab):
+    y_mean = sum(y) / len(y)
+    b_means = [sum(yi) / len(yi) for yi in qb]
+    return sum([len(yi) * (bi - y_mean)**2 for bi, yi in zip(b_means, qb)])
+
+#Soma dos quadrados das interacoes
+def ssab(y, qab):
+    y_mean = sum(y) / len(y)
+    ab_means = [sum(yi) / len(yi) for yi in qab]
+    return sum([len(yi) * (abi - y_mean)**2 for abi, yi in zip(ab_means, qab)])
+
+def calcular_sst(tabela):
+    y = [linha[-1] for linha in tabela if len(linha) > 4] 
+    y_mean = sum(y) / len(y)  
+    sst = sum([(yi - y_mean) ** 2 for yi in y])  
+    return sst
+
+def calcular_efeitos(tabela, sst):
+    efeitos = {}
+    
+    fatores = [chr(65 + i) for i in range(len(tabela[0]) - 4)]
+    
+    for i, fator in enumerate(fatores):
+        ss = sum([(linha[-1] - linha[-1] / (2 ** len(fatores))) ** 2 for linha in tabela])
+        
+        efeito = ss / sst
+        
+        efeitos[fator] = efeito
+    
+    return efeitos
+
+def printa_efeitos(efeitos):
+    print("Efeitos dos fatores:")
+    for fator, efeito in efeitos.items():
+        print(f"{fator}: {efeito * 100:.2f}%")
+    
