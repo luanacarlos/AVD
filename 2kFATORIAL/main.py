@@ -122,3 +122,5 @@ def imprimir_tabela_3(tabela):
         print ("{:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2], linha[3], linha[4], linha[5], linha[6], linha[7], linha[8]))
 
 
+
+print ("Digite o valor de K: ")
