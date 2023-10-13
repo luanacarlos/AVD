@@ -22,48 +22,52 @@ def tabela_de_sinais_2():
             tabela.append(linha)
     return tabela
 
-#Tabela atual - pre resultados
-tabela = tabela_de_sinais_2()
-imprimir_tabela_2(tabela)
-
 ##FUNCAO PARA CALCULAR OS RESULTADOS E COLOCAR NA TABELA
-y = []
-# Multiplicar a coluna Y pela coluna 1
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[0])
-y.append(sum)
-print(sum)
+def adicionar_resultado (tabela):
+    y = []
+    
+    # Multiplicar a coluna Y pela coluna 1
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[0])
+    y.append(sum)
 
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[1])
-y.append(sum)
-print(sum)
+    #COLUNA A*Y 
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[1])
+    y.append(sum)
 
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[2])
-y.append(sum)
-print(sum)
+    #COLUNA B*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[2])
+    y.append(sum)
 
-sum = 0
-for i, linha in enumerate(tabela):
-    sum = sum + (tabela[i][-1] * linha[3])
-y.append(sum)
-print(sum)
+    #COLUNA AB*Y
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[3])
+    y.append(sum)
 
-y.append("Total")
-print(y)
-tabela.append(y)
-imprimir_tabela_2(tabela) 
+    #SÓ COLOCAR TOTAL lA MESMO
+    y.append("Total")
+    tabela.append(y)
+    
+    #lINHA ABAIXO QUE TEM OS RESULTAODS DIVIDIDO POR 4
+    new_y = []
+    for i in range (len(y)-1):
+        new_y.append(y[i] /4)
+    new_y.append("Total/4")
+    tabela.append(new_y)  
 
-new_y = []
-for i in range (len(y)-1):
-    new_y.append(y[i] /4)
-new_y.append("Total/4")
-tabela.append(new_y)
-imprimir_tabela_2(tabela) 
+# #Tabela atual - pre resultados
+# tabela = tabela_de_sinais_2()
+# imprimir_tabela_2(tabela)
+
+
+# adicionar_resultado(tabela)
+# imprimir_tabela_2(tabela) 
 
 
 
@@ -75,7 +79,7 @@ def tabela_de_sinais3(k,repeticoes):
         linha.append(linha[1] * linha[2])              # AB
         linha.append(linha[1] * linha[3])              # AC
         linha.append(linha[2] * linha[3])              # BC
-        linha.append(linha[1] * linha[2] * linha[3])    # ABC
+        linha.append(linha[1] * linha[2] * linha[3])   # ABC
         if repeticoes > 1:
             linha.append((0,) * repeticoes) #Y()
         else:
