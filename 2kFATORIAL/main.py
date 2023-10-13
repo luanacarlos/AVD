@@ -38,8 +38,8 @@ def adicionar_resultado_repeat_1 (tabela):
         new_y.append(y[i] /4)
     new_y.append("Total/4")
     tabela.append(new_y)  
-    
-    
+
+
 
 # PARA K = 2
 def imprimir_tabela_2_repeat_1(tabela):
@@ -49,6 +49,7 @@ def imprimir_tabela_2_repeat_1(tabela):
         print("{:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2],  linha[3], str(linha[4])))
 
 def imprimir_tabela_2_repeat_maior1(tabela):
+    print("\n----------Tabela De Sinais--------------\n")
     print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^25}".format("1", "A", "B", "AB", "Y", "yMedia"))
     for linha in tabela:
         if len(linha) >= 6:
@@ -83,19 +84,67 @@ def calcula_yMedia(tabela, repeticoes):
             linha.append(soma_y) #Coluna Y Media
 
 
-k = int(input("Digite o valor de K: "))
-repeticoes = int(input("Digite o valor de repeticoes: "))
-if k == 2:
-    if repeticoes == 1:
-        tabela = tabela_de_sinais_2(repeticoes)
-        adicionar_resultado_repeat_1(tabela)
-        imprimir_tabela_2_repeat_1(tabela)
-    else:
-        tabela = tabela_de_sinais_2(repeticoes)
-        calcula_yMedia(tabela, repeticoes)
-        imprimir_tabela_2_repeat_maior1(tabela)
-else:
-    print("TODO()")
+# k = int(input("Digite o valor de K: "))
+# repeticoes = int(input("Digite o valor de repeticoes: "))
+# if k == 2:
+#     if repeticoes == 1:
+#         tabela = tabela_de_sinais_2(repeticoes)
+#         adicionar_resultado_repeat_1(tabela)
+#         imprimir_tabela_2_repeat_1(tabela)
+#     else:
+#         tabela = tabela_de_sinais_2(repeticoes)
+#         calcula_yMedia(tabela, repeticoes)
+#         imprimir_tabela_2_repeat_maior1(tabela)
+# else:
+#     print("TODO()")
+
+
+k = 2
+repeticoes = 3 
+tabela = tabela_de_sinais_2(repeticoes)
+calcula_yMedia(tabela, repeticoes)
+imprimir_tabela_2_repeat_maior1(tabela)
+
+def adicionar_resultado_repeat_maior1 (tabela):
+    y = []    
+    # Multiplicar a coluna yMedia pela coluna 1
+    sum = 0.0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[0])
+    y.append(sum)
+
+    #COLUNA A*yMedia 
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[1])
+    y.append(sum)
+
+    #COLUNA B*yMedia
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[2])
+    y.append(sum)
+
+    #COLUNA AB*yMedia
+    sum = 0
+    for i, linha in enumerate(tabela):
+        sum = sum + (tabela[i][-1] * linha[3])
+    y.append(sum)
+
+    y.append("             ")
+
+    #SÓ COLOCAR TOTAL lA MESMO
+    y.append("Total")
+    tabela.append(y)
+
+    #lINHA ABAIXO QUE TEM OS RESULTAODS DIVIDIDO POR 4
+    new_y = []
+    for i in range (len(y)-2):
+        new_y.append((y[i])/4) #yMedia
+    new_y.append("             ") #só espaçamento mesmo
+    new_y.append("Total/4")
+    tabela.append(new_y)
+
 
 # PARA K = 3
 def tabela_de_sinais3(k,repeticoes):
