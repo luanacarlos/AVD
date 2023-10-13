@@ -1,29 +1,7 @@
 import itertools 
 
-# PARA K = 2
-def imprimir_tabela_2(tabela):
-    print("{:^5} {:^5} {:^5} {:^5} {:^5}".format("1","A", "B", "AB", "Y"))
-    for linha in tabela:
-        print("{:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2],  linha[3], str(linha[4])))
-
-def tabela_de_sinais_2():
-    repeticoes = 1
-    tabela = []
-    for i in [-1, 1]:
-        for j in [-1, 1]:
-            linha = [1, j, i]
-            linha.append(linha[1] * linha[2]) # AB
-            if repeticoes > 1:
-                x = int(input("Digite o valor de resultados: "))
-                linha.append((x,) * repeticoes) # Y(1,2,3,4,5,6,7,8)
-            else:
-                x = int(input("Digite o valor de resultados: "))
-                linha.append(x) # Y
-            tabela.append(linha)
-    return tabela
-
-##FUNCAO PARA CALCULAR OS RESULTADOS E COLOCAR NA TABELA
-def adicionar_resultado (tabela):
+##FUNCAO PARA CALCULAR OS RESULTADOS E COLOCAR NA TABELA - REPETIÇÔES 
+def adicionar_resultado_repeat_1 (tabela):
     y = []
     
     # Multiplicar a coluna Y pela coluna 1
@@ -60,16 +38,60 @@ def adicionar_resultado (tabela):
         new_y.append(y[i] /4)
     new_y.append("Total/4")
     tabela.append(new_y)  
+    
+    
 
-# #Tabela atual - pre resultados
-# tabela = tabela_de_sinais_2()
-# imprimir_tabela_2(tabela)
+# PARA K = 2
+def imprimir_tabela_2_repeat_1(tabela):
+    print("\n----------Tabela De Sinais--------------\n")
+    print("{:^5} {:^5} {:^5} {:^5} {:^5}".format("1","A", "B", "AB", "Y"))
+    for linha in tabela:
+        print("{:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2],  linha[3], str(linha[4])))
+
+def imprimir_tabela_2_repeat_maior1(tabela):
+    print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^25}".format("A", "B", "C", "AB", "Y", "yMedia"))
+    for linha in tabela:
+        if len(linha) >= 6:
+            print("{:^5} {:^5} {:^5} {:^5} {:^5} {:^10}".format(linha[0], linha[1], linha[2], linha[3], str(linha[4]), linha[5]))
+
+def tabela_de_sinais_2():
+    repeticoes =  3
+    tabela = []
+    for i in [-1, 1]:
+        for j in [-1, 1]:
+            linha = [1, j, i]
+            linha.append(linha[1] * linha[2]) # AB
+            if repeticoes > 2:
+                # count = 0
+                # while(count<repeticoes):
+                a = [15,18,12]
+                    # x = int(input("Digite o valor de resultados: "))
+                    # a.append(x)
+                    # count = count + 1  
+                linha.append(a) # Y(1,2,3,4,5,6,7,8)
+            else:
+                x = int(input("Digite o valor de resultados: "))
+                linha.append(x) # Y
+            tabela.append(linha)
+    return tabela
 
 
-# adicionar_resultado(tabela)
-# imprimir_tabela_2(tabela) 
 
 
+# Tabela atual - pre resultados
+tabela = tabela_de_sinais_2()
+imprimir_tabela_2_repeat_1(tabela)
+
+# Adicionar resultados - Repeticoes maior que 1
+def calcula_yMedia(tabela, repeticoes):
+    soma_y = 0
+    for linha in tabela:
+        if len(linha) > 4: #Coluna Y
+            soma_y = sum(linha[4])/ repeticoes
+            linha.append(soma_y) #Coluna Y Media
+
+calcula_yMedia(tabela, 3)
+imprimir_tabela_2_repeat_maior1(tabela)
 
 # PARA K = 3
 def tabela_de_sinais3(k,repeticoes):
@@ -90,9 +112,9 @@ def tabela_de_sinais3(k,repeticoes):
 
 
 def imprimir_tabela_3(tabela):
+    print("\n----------Tabela De Sinais--------------\n")
     print ("{:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5}".format("1","A", "B", "C", "AB", "AC", "BC", "ABC", "Y"))
     for linha in tabela:
         print ("{:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5} {:^5}".format(linha[0], linha[1], linha[2], linha[3], linha[4], linha[5], linha[6], linha[7], linha[8]))
-
 
 
